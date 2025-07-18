@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { CssBaseline } from '@mui/material';
 
 import "./index.css";
-import App from "./App.tsx";
+import { App } from "./App";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
