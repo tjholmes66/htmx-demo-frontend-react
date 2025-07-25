@@ -28,10 +28,6 @@ route,
             }}
             onClick={onClick}
         >
-
-
-
-
       <ListItemIcon
         sx={[
           { minWidth: 'auto' },

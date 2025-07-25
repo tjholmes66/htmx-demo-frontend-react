@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './components';
 import {
     DashboardPage,
+    ContactsPage,
     CustomersPage,
     OrdersPage,
     InventoryPage,
@@ -15,6 +16,7 @@ export const App = () => (
         <Routes>
             <Route path="/" element={<Navigate to={ROUTES.main} />} />
             <Route path={ROUTES.main} element={<DashboardPage />} />
+            <Route path={ROUTES.contacts} element={<ContactsPage />} />
             <Route path={ROUTES.orders} element={<OrdersPage />} />
             <Route path={ROUTES.customers} element={<CustomersPage />} />
             <Route path={ROUTES.inventory} element={<InventoryPage />} />

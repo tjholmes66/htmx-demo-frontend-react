@@ -19,7 +19,7 @@ export const Header = () => {
           {isOpened ? <ChevronLeftIcon /> : <MenuIcon />}
         </IconButton>
         <Typography variant="h6" sx={{ margin: 'auto' }}>
-          Header
+          HTMX Demo - React UI
         </Typography>
       </Toolbar>
     </AppBar>
