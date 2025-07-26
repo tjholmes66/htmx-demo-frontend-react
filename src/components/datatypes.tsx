@@ -47,3 +47,46 @@ export interface Position {
     positionCode: string;
     description:  string;
 }
+
+export interface ContactEmail {
+    emailId:     number;
+    contact:     Contact;
+    emailType:   EmailType;
+    email:       string;
+    enteredDate: Date;
+}
+
+export interface EmailType {
+    id:          number;
+    description: string;
+    active:      boolean;
+}
+
+export interface ContactLink {
+    linkId:          number;
+    contact:         Contact;
+    linkType:        LinkType;
+    link:            string;
+    linkDescription: string;
+    enteredDate:     Date;
+}
+
+export interface LinkType {
+    id:          number;
+    description: string;
+    active:      boolean;
+}
+
+export interface ContactPhone {
+    phoneId:     number;
+    contact:     Contact;
+    phoneType:   PhoneType;
+    phone:       string;
+    enteredDate: Date;
+}
+
+export interface PhoneType {
+    id:          number;
+    description: string;
+    active:      boolean;
+}
