@@ -1,19 +1,19 @@
 import Box from '@mui/material/Box';
 import {DataGrid, type GridColDef, type GridRowParams} from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
-import type {Company, Contact} from "../datatypes.tsx";
+import type {ContactEmail, EmailType} from "../datatypes.tsx";
 import {IconButton, Tooltip} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const ContactsDataGrid = () => {
+export const ContactEmailsDataGrid = () => {
 
-    const [contacts, setContacts] = useState<Contact[]>([]);
+    const [contactEmails, setContactEmails] = useState<ContactEmail[]>([]);
     const [clickedRowId, setClickedRowId] = useState(0); // State to store the clicked row ID
 
     useEffect(() => {
-        fetch('http://localhost:8080/rest/contacts/userId/2')
+        fetch('http://localhost:8080/rest/contact/email/contactId/{contactId}')
             .then((response) => response.json())
-            .then((json) => setContacts(json));
+            .then((json) => setContactEmails(json));
     }, []);
 
     const handleRowClick = (params: GridRowParams["row"]) => {
@@ -26,66 +26,30 @@ export const ContactsDataGrid = () => {
     const onDeleteClick = (id: number) => {
         console.log('onDeleteClick: Clicked row is: ' + id);
         // Update the DataGrid's state to remove the deleted row
-        setContacts(prevRows => prevRows.filter(row => row.contactId !== id));
+        setContactEmails(prevRows => prevRows.filter(row => row.emailId !== id));
         console.log(`Row with ID ${id} deleted successfully.`);
     };
 
-    const columns: GridColDef<Contact>[] = [
-        { field: 'contactId', headerName: 'ID', width: 90 },
+    const columns: GridColDef<ContactEmail>[] = [
+        { field: 'emailId', headerName: 'ID', width: 90 },
         {
-            field: 'firstName',
-            headerName: 'First Name',
+            field: 'email',
+            headerName: 'email',
             flex: 1,
             width: 150
         },
         {
-            field: 'lastName',
-            headerName: 'Last Name',
+            field: 'emailType',
+            headerName: 'EmailType',
             flex: 1,
+            valueGetter: (emailType: EmailType) => emailType.description,
             width: 150
         },
         {
-            field: 'address1',
-            headerName: 'Address 1',
-            flex: 1,
-            width: 150
-        },
-        {
-            field: 'address2',
-            headerName: 'Address 2',
-            flex: 1,
-            width: 150
-        },
-        {
-            field: 'city',
-            headerName: 'City',
-            flex: 1,
-            width: 150
-        },
-        {
-            field: 'state',
-            headerName: 'State',
+            field: 'enteredDate',
+            headerName: 'Created',
             flex: 1,
             width: 110
-        },
-        {
-            field: 'zip',
-            headerName: 'Zip Code',
-            flex: 1,
-            width: 110
-        },
-        {
-            field: 'birthDate',
-            headerName: 'Birthday',
-            flex: 1,
-            width: 110
-        },
-        {
-            field: 'company',
-            headerName: 'Company',
-            flex: 1,
-            valueGetter: (company: Company) => company.companyName,
-            width: 150
         },
         {
             field: 'deleteButton',
@@ -98,7 +62,7 @@ export const ContactsDataGrid = () => {
                     <IconButton
                         size='small'
                         color='error'
-                        onClick={() => onDeleteClick(params.row.contactId)}
+                        onClick={() => onDeleteClick(params.row.emailId)}
                     >
                         <Tooltip title="Delete Contact">
                             <DeleteIcon />
@@ -109,14 +73,12 @@ export const ContactsDataGrid = () => {
         },
     ];
 
-
-
     return (
         <Box sx={{ height: 300, width: '100%', border: '2px solid black', }}>
             <DataGrid sx={{ width: '100%', border: '2px solid red'}}
-                rows={contacts}
+                rows={contactEmails}
                 columns={columns}
-                getRowId={(row) => row.contactId}
+                getRowId={(row) => row.emailId}
                 initialState={{
                     pagination: {
                         paginationModel: {
@@ -138,4 +100,4 @@ export const ContactsDataGrid = () => {
 
 };
 
-export default ContactsDataGrid
+export default ContactEmailsDataGrid

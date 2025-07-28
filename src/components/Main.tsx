@@ -3,7 +3,7 @@ import { styled } from '@mui/material';
 
 const StyledMain = styled('main')`
   height: 100%;
-  flex: 1,;
+  flex: 1;
   overflow: auto;
   padding: 10px;
 `;
