@@ -1,27 +1,50 @@
 import Box from '@mui/material/Box';
-import {DataGrid, type GridColDef, type GridRowParams} from '@mui/x-data-grid'
-import { useEffect, useState } from 'react'
+import {DataGrid, type GridColDef} from '@mui/x-data-grid'
+import {useContext, useEffect, useState} from 'react'
 import type {ContactEmail, EmailType} from "../datatypes.tsx";
 import {IconButton, Tooltip} from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete'
+import {ContactContext} from "../../contexts/contact-context.tsx";
 
-export const ContactEmailsDataGrid = () => {
+export const ContactEmailsDataGrid: React.FC = () => {
+
+    // contact context to retrieve contact id
+    const contactContext = useContext(ContactContext);
+
+    if (!contactContext) {
+        throw new Error('ContactEmailsDataGrid must be used within a ContactContextProvider');
+    }
+
+    const { contactId} = contactContext;
 
     const [contactEmails, setContactEmails] = useState<ContactEmail[]>([]);
-    const [clickedRowId, setClickedRowId] = useState(0); // State to store the clicked row ID
 
     useEffect(() => {
+        console.log("ContactEmailsDataGrid: contactContext.contactId = " + contactContext.contactId);
+
+        /*
+        fetch('http://localhost:8080/rest/contact/email/contactId/${contactContext.contactId}')
+            .then((response) => response.json())
+            .then((json) => setContactEmails(json));
+
+        fetch('http://localhost:8080/rest/contact/email/contactId/{contactContext.contactId}')
+            .then((response) => response.json())
+            .then((json) => setContactEmails(json));
+
+        fetch('http://localhost:8080/rest/contact/email/contactId/${contactId}')
+            .then((response) => response.json())
+            .then((json) => setContactEmails(json));
+
         fetch('http://localhost:8080/rest/contact/email/contactId/{contactId}')
             .then((response) => response.json())
             .then((json) => setContactEmails(json));
-    }, []);
+            */
 
-    const handleRowClick = (params: GridRowParams["row"]) => {
-        // params.id contains the unique ID of the clicked row
-        setClickedRowId(params.contactId); // params.id contains the ID of the clicked row
-        console.log('handleRowClick: Clicked row ID: params.id', params.id + '  clickedRowId=' + clickedRowId + '   contactId=' + params.contactId);
-        // You can perform further actions with the ID here, e.g., open a modal, fetch data, etc.
-    };
+        fetch('http://localhost:8080/rest/contact/email/contactId/' + contactContext.contactId)
+            .then((response) => response.json())
+            .then((json) => setContactEmails(json));
+
+    }, [contactId]);
 
     const onDeleteClick = (id: number) => {
         console.log('onDeleteClick: Clicked row is: ' + id);
@@ -56,7 +79,7 @@ export const ContactEmailsDataGrid = () => {
             headerName: 'Actions',
             description: 'Actions column.',
             sortable: false,
-            width: 160,
+            width: 90,
             renderCell: (params) => {
                 return (
                     <IconButton
@@ -93,7 +116,6 @@ export const ContactEmailsDataGrid = () => {
                 }}
                 pageSizeOptions={[5]}
                 disableMultipleRowSelection={true}
-                onRowClick={handleRowClick}
             />
         </Box>
     );

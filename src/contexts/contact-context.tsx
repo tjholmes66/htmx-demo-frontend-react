@@ -1,29 +1,26 @@
-import {createContext, type ReactNode, useState} from 'react';
+import  { createContext, useState } from 'react';
 
 interface ContactContextType {
     contactId: number;
-    updateContact: (newContactId: number) => void;
+    updateContactId: (newContactId: number) => void;
 }
 
-// Create the context with a default value (can be null or an initial object)
-export const ContactContext = createContext<ContactContextType | null>(null);
+export const ContactContext = createContext<ContactContextType | undefined>(undefined);
 
-interface ContactProviderProps {
-    children: ReactNode;
+interface ContactContextProviderProps {
+    children: React.ReactNode;
 }
 
-// Create a Provider component to encapsulate the context logic
-export const ContactProvider = ({ children }: ContactProviderProps) => {
-    // You would typically manage state here, e.g., using useState
-    const [contact, setContact] = useState({ contactId: 0});
+export const ContactContextProvider: React.FC<ContactContextProviderProps> = ({ children }) => {
+    const [myContactId, setContactId] = useState<number>(999);
 
-    const updateContact = (newContactId: number) => {
-        setContact({ contactId: newContactId});
+    const updateContactId = (newContactId: number) => {
+        setContactId(newContactId);
     };
 
     const contextValue: ContactContextType = {
-        contactId: contact.contactId,
-        updateContact,
+        contactId: myContactId,
+        updateContactId: updateContactId,
     };
 
     return (
