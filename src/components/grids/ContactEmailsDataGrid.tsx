@@ -74,7 +74,7 @@ export const ContactEmailsDataGrid = () => {
     ];
 
     return (
-        <Box sx={{ height: 300, width: '100%', border: '2px solid black', }}>
+        <Box sx={{ height: 300, width: '33%', border: '2px solid black', padding: '2px' }}>
             <DataGrid sx={{ width: '100%', border: '2px solid red'}}
                 rows={contactEmails}
                 columns={columns}
@@ -87,7 +87,7 @@ export const ContactEmailsDataGrid = () => {
                     },
                     columns: {
                         columnVisibilityModel: {
-                            contactId: false,
+                            emailId: false,
                         },
                     },
                 }}
